@@ -27,12 +27,15 @@ async function buildPushAndDeploy() {
   const fullFilePath = `${dockerFilePath}/${dockerFile}`;
 
   try {
-    const cmd = `docker build ${buildOptions} --tag registry.heroku.com/${appName}/${formation} -f ${fullFilePath} ${dockerFilePath}`;
+    const tag = `registry.heroku.com/${appName}/${formation}`;
+    let cmd = `docker build ${buildOptions} --tag ${tag} -f ${fullFilePath} ${dockerFilePath}`;
     console.log("Running command:", cmd);
     await exec(cmd);
     console.log("Image built 🛠");
 
-    await exec(herokuAction("push", formation));
+    cmd = `docker push ${tag}`;
+    console.log("Running command:", cmd);
+    await exec(cmd);
     console.log("Container pushed to Heroku Container Registry ⏫");
 
     await exec(herokuAction("release", formation));
