@@ -23,7 +23,7 @@ async function buildPushAndDeploy() {
   const buildOptions = core.getInput("options") || "";
   const herokuAction = herokuActionSetUp(appName);
   const formation = core.getInput("formation");
-  const dockerFile = core.getInput("docker_file") || "Dockerfile";
+  const dockerFile = core.getInput("dockerfile") || "Dockerfile";
   const fileSwitch = `${dockerFilePath}/${dockerFile}`;
 
   try {

@@ -40,7 +40,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(709);
+/******/ 		return __webpack_require__(708);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -63,10 +63,10 @@ module.exports = require("util");
 
 /***/ }),
 
-/***/ 709:
+/***/ 708:
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
-const core = __webpack_require__(863);
+const core = __webpack_require__(833);
 const { promisify } = __webpack_require__(669);
 
 const exec = promisify(__webpack_require__(129).exec);
@@ -91,7 +91,7 @@ async function buildPushAndDeploy() {
   const buildOptions = core.getInput("options") || "";
   const herokuAction = herokuActionSetUp(appName);
   const formation = core.getInput("formation");
-  const dockerFile = core.getInput("docker_file") || "Dockerfile";
+  const dockerFile = core.getInput("dockerfile") || "Dockerfile";
   const fileSwitch = `${dockerFilePath}/${dockerFile}`;
 
   try {
@@ -141,7 +141,7 @@ loginHeroku()
 
 /***/ }),
 
-/***/ 863:
+/***/ 833:
 /***/ (function(module) {
 
 module.exports = eval("require")("@actions/core");
