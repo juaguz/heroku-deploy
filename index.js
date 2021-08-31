@@ -22,7 +22,7 @@ async function buildPushAndDeploy() {
   const dockerFilePath = core.getInput("dockerfile_path") || ".";
   const buildOptions = core.getInput("options") || "";
   const herokuAction = herokuActionSetUp(appName);
-  const formation = core.getInput("formation");
+  const formation = core.getInput("formation") || "web";
   const dockerFile = core.getInput("dockerfile") || "Dockerfile";
   const fileSwitch = `${dockerFilePath}/${dockerFile}`;
 
@@ -32,10 +32,10 @@ async function buildPushAndDeploy() {
     );
     console.log("Image built 🛠");
 
-    await exec(herokuAction("push"));
+    await exec(herokuAction("push", formation));
     console.log("Container pushed to Heroku Container Registry ⏫");
 
-    await exec(herokuAction("release"));
+    await exec(herokuAction("release", formation));
     console.log("App Deployed successfully 🚀");
   } catch (error) {
     core.setFailed(
@@ -55,11 +55,11 @@ function herokuActionSetUp(appName) {
    * @param {Actions} action - Action to be performed
    * @returns {string}
    */
-  return function herokuAction(action) {
+  return function herokuAction(action, formation) {
     const HEROKU_API_KEY = core.getInput("api_key");
     const exportKey = `HEROKU_API_KEY=${HEROKU_API_KEY}`;
 
-    return `${exportKey} heroku container:${action} web --app ${appName}`;
+    return `${exportKey} heroku container:${action} ${formation} --app ${appName}`;
   };
 }
 
