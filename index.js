@@ -58,8 +58,10 @@ function herokuActionSetUp(appName) {
   return function herokuAction(action, formation) {
     const HEROKU_API_KEY = core.getInput("api_key");
     const exportKey = `HEROKU_API_KEY=${HEROKU_API_KEY}`;
+    const cmd = `heroku container:${action} ${formation} --app ${appName}`;
+    console.log("Running command:", cmd);
 
-    return `${exportKey} heroku container:${action} ${formation} --app ${appName}`;
+    return `${exportKey} ${cmd}`;
   };
 }
 
