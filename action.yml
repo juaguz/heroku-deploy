@@ -16,7 +16,7 @@ inputs:
     description: 'Your Heroku App Name'
     required: true
   dockerfile_path:
-    description: 'Dokerfile path'
+    description: 'Dockerfile path'
     required: true
   dockerfile:
     description: 'Dockerfile'
