@@ -27,9 +27,9 @@ async function buildPushAndDeploy() {
   const fullFilePath = `${dockerFilePath}/${dockerFile}`;
 
   try {
-    await exec(
-      `docker build ${buildOptions} --tag registry.heroku.com/${appName}/${formation} -f ${fullFilePath} ${dockerFilePath}`
-    );
+    const cmd = `docker build ${buildOptions} --tag registry.heroku.com/${appName}/${formation} -f ${fullFilePath} ${dockerFilePath}`;
+    console.log("Running command:", cmd);
+    await exec(cmd);
     console.log("Image built 🛠");
 
     await exec(herokuAction("push", formation));
