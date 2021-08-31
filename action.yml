@@ -18,6 +18,9 @@ inputs:
   dockerfile_path:
     description: 'Dokerfile path'
     required: true
+  dockerfile:
+    description: 'Dokerfile'
+    required: false
   options:
     description: 'Optional build parameters'
     required: false
