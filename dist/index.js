@@ -79,12 +79,12 @@ async function buildPushAndDeploy() {
   const formation = core.getInput("formation") || "web";
   const dockerFile = core.getInput("dockerfile") || "Dockerfile";
   const fullFilePath = `${dockerFilePath}/${dockerFile}`;
-
+  var execRes = ""
   try {
     const tag = `registry.heroku.com/${appName}/${formation}`;
     let cmd = `docker build ${buildOptions} --tag ${tag} -f ${fullFilePath} ${dockerFilePath}`;
     console.log("Running command:", cmd);
-    await exec(cmd);
+    execRes = await exec(cmd);
     console.log("Image built 🛠");
 
     cmd = `docker push ${tag}`;
@@ -95,6 +95,7 @@ async function buildPushAndDeploy() {
     await exec(herokuAction("release", formation));
     console.log("App Deployed successfully 🚀");
   } catch (error) {
+    console.log(execRes)
     core.setFailed(
       `Something went wrong building your image. Error: ${error.message}`
     );
