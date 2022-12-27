@@ -95,7 +95,7 @@ async function buildPushAndDeploy() {
     await exec(herokuAction("release", formation));
     console.log("App Deployed successfully 🚀");
   } catch (error) {
-    console.log(execRes)
+    console.log(execRes.stdout)
     core.setFailed(
       `Something went wrong building your image. Error: ${error.message}`
     );
